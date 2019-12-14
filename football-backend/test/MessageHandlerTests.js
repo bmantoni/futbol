@@ -9,11 +9,11 @@ describe('MessageHandler', function () {
         });
         it('throws error when invalid json', function () {
             var test = 'IM NOT JSON';
-            assert.throws((test) => new MessageHandler().parse(test), Error);
+            assert.throws(() => new MessageHandler().parse(test), Error);
         });
         it('throws error if no Action provided', function () {
             var test = '{"player1position": "x,y"}';
-            assert.throws((test) => new MessageHandler().parse(test), Error);
+            assert.throws(() => new MessageHandler().parse(test), Error);
         });
     });
 });

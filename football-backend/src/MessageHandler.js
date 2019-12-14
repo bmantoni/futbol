@@ -5,8 +5,14 @@ class MessageHandler {
 
     parse(msg) {
         var obj = JSON.parse(msg);
-        // validate
+        this.validateMessage(obj);
         return obj;
+    }
+
+    validateMessage(obj) {
+        if (!obj.action) {
+            throw new Error('Missing action');
+        }
     }
 }
 
