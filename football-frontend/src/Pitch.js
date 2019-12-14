@@ -5,6 +5,7 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 import Player from './Player';
 import Ball from './Ball';
 import ScoreBoard from './ScoreBoard';
+import NetworkClient from './NetworkClient';
 
 class Scene extends React.Component {
   
@@ -13,6 +14,8 @@ class Scene extends React.Component {
     
     this.PITCH_WIDTH = 800;
     this.PITCH_HEIGHT = 550;
+
+    this.netClient = new NetworkClient('localhost', '8080');
 
     this.myEngine = Matter.Engine.create({});
     this.myEngine.world.gravity.y = 0;
@@ -102,6 +105,7 @@ class Scene extends React.Component {
   movePlayer(player, direction) {
     var vector = player.calcRunVector(direction);
     Matter.Body.applyForce(player.body, {x: player.body.position.x, y: player.body.position.y }, vector);
+    this.netClient.send({direction: direction});
   }
 
   handleKeyPress(k) {

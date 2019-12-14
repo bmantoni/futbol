@@ -1,0 +1,23 @@
+{
+  "name": "football-backend",
+  "version": "1.0.0",
+  "description": "backend for futbol",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmantoni/futbol.git"
+  },
+  "author": "Bobby Mantoni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmantoni/futbol/issues"
+  },
+  "homepage": "https://github.com/bmantoni/futbol#readme",
+  "dependencies": {
+    "mocha": "^6.2.2",
+    "ws": "^7.2.1"
+  }
+}
