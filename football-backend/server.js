@@ -1,14 +1,36 @@
-const WebSocket = require('ws');
+const ws = require('express-ws')
+const express = require('express')
+const MessageHandler = require('./src/MessageHandler');
+const GameState = require('./src/GameState');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const mh = new MessageHandler();
+const gs = new GameState();
 
-wss.on('connection', function connection(ws) {
-	ws.on('message', function incoming(message) {
-		console.log('received: %s', message);
+const server = express();
+const wsInstance = ws(server);
+
+server.get('/join', (req, res) => {
+	console.log((new Date()) + ' Received request for ' + req.url);
+	res.json({player: gs.join()});
+})
+.get('/reset', (req, res) => {
+	gs.reset();
+	res.json({result: 'OK'});
+});
+
+server.ws('/ws', (ws, req) => {
+	ws.on('message', msg => {
+		console.log('received: %s', msg);
+		console.log('clients: ' + wsInstance.getWss().clients);
+
 		try {
-			var obj = JSON.parse(message);
+			var cmd = mh.parse(msg); // validate
+			wsInstance.getWss().clients.forEach(x => ws.send(msg));
+		} catch (err) {
+			ws.send(JSON.stringify(err));
+			console.log('ERROR ' + err);
 		}
 	});
-
-	ws.send('something');
 });
+
+server.listen(3001);

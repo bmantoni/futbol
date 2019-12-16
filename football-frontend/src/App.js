@@ -1,16 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from "react";
 import './App.css';
 import Pitch from './Pitch'
 
-function App() {
+const App = () => {
+  const [hasError, setErrors] = useState(false);
+  const [player, setPlayer] = useState({});
+
+  async function joinGame() {
+    const res = await fetch("http://localhost:3000/join");
+    res.json()
+      .then(res => setPlayer(res.player))
+      .catch(err => setErrors(err))
+  }
+
+  useEffect(() => {
+    joinGame();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        Player 1
+        Player {JSON.stringify(player)}
       </header>
       <body>
-        <Pitch player="1" /> 
+        <Pitch player="{player}" /> 
       </body>
     </div>
   );

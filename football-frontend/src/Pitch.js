@@ -15,7 +15,7 @@ class Scene extends React.Component {
     this.PITCH_WIDTH = 800;
     this.PITCH_HEIGHT = 550;
 
-    this.netClient = new NetworkClient('localhost', '8080');
+    this.netClient = new NetworkClient('localhost', '3001');
 
     this.myEngine = Matter.Engine.create({});
     this.myEngine.world.gravity.y = 0;
@@ -105,7 +105,7 @@ class Scene extends React.Component {
   movePlayer(player, direction) {
     var vector = player.calcRunVector(direction);
     Matter.Body.applyForce(player.body, {x: player.body.position.x, y: player.body.position.y }, vector);
-    this.netClient.send({direction: direction});
+    this.netClient.send({action: this.props.player === 1 ? 'P1U' : 'P2U', direction: direction});
   }
 
   handleKeyPress(k) {

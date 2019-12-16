@@ -20,9 +20,10 @@ class NetworkClient {
             // handle incoming message
             console.log(msg);
         };
-        this.send = (msg) => {
-            this.ws.send(window.JSON.stringify(msg));
-        }
+    }
+
+    send(msg)  {
+        this.ws.send(window.JSON.stringify(msg));
     }
 }
 
