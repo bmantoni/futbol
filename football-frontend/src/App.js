@@ -23,7 +23,7 @@ const App = () => {
         Player {JSON.stringify(player)}
       </header>
       <body>
-        <Pitch player="{player}" /> 
+        <Pitch player={player} /> 
       </body>
     </div>
   );

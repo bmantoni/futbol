@@ -24,7 +24,7 @@ server.ws('/ws', (ws, req) => {
 		console.log('clients: ' + wsInstance.getWss().clients);
 
 		try {
-			var cmd = mh.parse(msg); // validate
+			var cmd = mh.parse(msg); // just using to validate for now
 			wsInstance.getWss().clients.forEach(x => ws.send(msg));
 		} catch (err) {
 			ws.send(JSON.stringify(err));

@@ -105,23 +105,22 @@ class Scene extends React.Component {
   movePlayer(player, direction) {
     var vector = player.calcRunVector(direction);
     Matter.Body.applyForce(player.body, {x: player.body.position.x, y: player.body.position.y }, vector);
-    this.netClient.send({action: this.props.player === 1 ? 'P1U' : 'P2U', direction: direction});
+    this.netClient.send({player: this.props.player.toString(), action: this.props.player === 1 ? 'P1U' : 'P2U', direction: direction});
+  }
+
+  currentPlayer() {
+    return this.props.player === 1 ? this.player1 : this.player2;
+  }
+
+  DIRECTION_MAP = {
+    'w': Player.Direction.UP,
+    'a': Player.Direction.LEFT,
+    's': Player.Direction.DOWN,
+    'd': Player.Direction.RIGHT
   }
 
   handleKeyPress(k) {
-    switch (k) {
-      case 'w':
-          this.movePlayer(this.player1, Player.Direction.UP);
-          break;
-        case 'a':
-          this.movePlayer(this.player1, Player.Direction.LEFT);
-          break;
-        case 's':
-          this.movePlayer(this.player1, Player.Direction.DOWN);
-          break;
-        case 'd':
-          this.movePlayer(this.player1, Player.Direction.RIGHT);
-    }
+    this.movePlayer(this.currentPlayer(), this.DIRECTION_MAP[k]);
   }
 
   render() {
