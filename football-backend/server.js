@@ -33,4 +33,6 @@ server.ws('/ws', (ws, req) => {
 	});
 });
 
-server.listen(3001);
+var myServer = server.listen(3001);
+
+module.exports = myServer;
