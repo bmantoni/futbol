@@ -15,7 +15,7 @@ class Scene extends React.Component {
     this.PITCH_WIDTH = 800;
     this.PITCH_HEIGHT = 550;
 
-    this.netClient = new NetworkClient('localhost', '3001');
+    this.netClient = new NetworkClient('localhost', '3001', this.movePlayerHandler, this);
 
     this.myEngine = Matter.Engine.create({});
     this.myEngine.world.gravity.y = 0;
@@ -102,10 +102,19 @@ class Scene extends React.Component {
     Matter.Render.run(render);
   }
 
-  movePlayer(player, direction) {
+  movePlayerHandler(playerNum, direction, self = this) {
+    if (playerNum !== self.props.player) {
+      var playerObj = playerNum === 1 ? self.player1 : self.player2;
+      self.movePlayer(playerObj, direction, false);
+    }
+  }
+
+  movePlayer(player, direction, sendUpdate = true) {
     var vector = player.calcRunVector(direction);
     Matter.Body.applyForce(player.body, {x: player.body.position.x, y: player.body.position.y }, vector);
-    this.netClient.send({player: this.props.player.toString(), action: this.props.player === 1 ? 'P1U' : 'P2U', direction: direction});
+    if (sendUpdate) {
+      this.netClient.send({player: this.props.player.toString(), action: this.props.player === 1 ? 'P1U' : 'P2U', direction: direction});
+    }
   }
 
   currentPlayer() {

@@ -21,11 +21,11 @@ server.get('/join', (req, res) => {
 server.ws('/ws', (ws, req) => {
 	ws.on('message', msg => {
 		console.log('received: %s', msg);
-		console.log('clients: ' + wsInstance.getWss().clients);
 
 		try {
 			var cmd = mh.parse(msg); // just using to validate for now
-			wsInstance.getWss().clients.forEach(x => ws.send(msg));
+			console.log(`echoing back to ${wsInstance.getWss().clients.size} clients`);
+			wsInstance.getWss().clients.forEach(x => x.send(msg));
 		} catch (err) {
 			ws.send(JSON.stringify(err));
 			console.log('ERROR ' + err);
