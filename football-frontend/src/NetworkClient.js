@@ -6,6 +6,7 @@ class NetworkClient {
         this.subscriberOwner = that;
         this.ws = new WebSocket(`ws://${domain}:${port}/ws`);
         var myself = this;
+        
         this.ws.onopen = function() {
             // do something
             console.log('opened socket');
