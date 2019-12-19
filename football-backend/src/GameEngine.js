@@ -4,8 +4,10 @@ var Ball = require('./Ball');
 
 class GameEngine {
     //static TICK_TIME_DELTA = 1000 / 60;
+    player1Score = 0;
+    player2Score = 0;
 
-    constructor(updateDelta) {
+    constructor(updateDelta = 100) {
         this.PITCH_WIDTH = 800;
         this.PITCH_HEIGHT = 550;
         this.updateInterval = updateDelta;
@@ -40,13 +42,39 @@ class GameEngine {
     watchForCollisions() {
         var self = this;
         Matter.Events.on(this.myEngine, 'collisionStart', function(event) {
-        if (self.didPlayer2Score(event.pairs)) {
-            self.handlePlayerScored(2, self);
-        }
-        if (self.didPlayer1Score(event.pairs)) {
-            self.handlePlayerScored(1, self);
-        }
+            if (self.didPlayer2Score(event.pairs)) {
+                self.handlePlayerScored(2, self);
+            }
+            if (self.didPlayer1Score(event.pairs)) {
+                self.handlePlayerScored(1, self);
+            }
         });
+    }
+
+    didPlayer2Score(pairs) {
+        return pairs.find(p => (p.collision.bodyA.id === this.player1goalPost.id &&
+        p.collision.bodyB.id === this.ball.body.id) || (
+        p.collision.bodyB.id === this.player1goalPost.id &&
+        p.collision.bodyA.id === this.ball.body.id));
+    }
+
+    didPlayer1Score(pairs) {
+        return pairs.find(p => (p.collision.bodyA.id === this.player2goalPost.id &&
+        p.collision.bodyB.id === this.ball.body.id) || (
+        p.collision.bodyB.id === this.player2goalPost.id &&
+        p.collision.bodyA.id === this.ball.body.id));
+    }
+
+    handlePlayerScored(player, self) {
+        self.player1Score = self.player1Score + (player === 1 ? 1 : 0);
+        self.player2Score = self.player2Score + (player === 2 ? 1 : 0);
+        self.resetPositions(self);
+    }
+
+    resetPositions(self) {
+        self.player1.resetPosition();
+        self.player2.resetPosition();
+        self.ball.resetPosition();
     }
 
     createPitch() {
