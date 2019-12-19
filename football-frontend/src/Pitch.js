@@ -15,7 +15,7 @@ class Scene extends React.Component {
     this.PITCH_WIDTH = 800;
     this.PITCH_HEIGHT = 550;
 
-    this.netClient = new NetworkClient('localhost', '3001', this.movePlayerHandler, this);
+    this.netClient = new NetworkClient('localhost', '3001', this.updateStateHandler, this);
 
     this.myEngine = Matter.Engine.create({});
     this.myEngine.world.gravity.y = 0;
@@ -130,6 +130,19 @@ class Scene extends React.Component {
 
   handleKeyPress(k) {
     this.movePlayer(this.currentPlayer(), this.DIRECTION_MAP[k]);
+  }
+
+  updateStateHandler(newState, self) {
+    Matter.Body.setVelocity(self.player1.body, newState.player1.velocity);
+    Matter.Body.setPosition(self.player1.body, newState.player1.position);
+    Matter.Body.setAngle(self.player1.body, newState.player1.angle);
+    Matter.Body.setVelocity(self.player2.body, newState.player2.velocity);
+    Matter.Body.setPosition(self.player2.body, newState.player2.position);
+    Matter.Body.setAngle(self.player2.body, newState.player2.angle);
+    Matter.Body.setVelocity(self.ball.body, newState.ball.velocity);
+    Matter.Body.setPosition(self.ball.body, newState.ball.position);
+    Matter.Body.setAngle(self.ball.body, newState.ball.angle);
+    // TODO scores too
   }
 
   render() {

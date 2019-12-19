@@ -17,7 +17,7 @@ describe('Socket messages', function () {
     });
     describe('state updates', function () {
         it('send valid starting state', async function () {
-            const expected = `{"player1":{"position":{"x":200,"y":275},"velocity":{"x":0,"y":0},"angle":0},"player2":{"position":{"x":600,"y":275},"velocity":{"x":0,"y":0},"angle":0},"ball":{"position":{"x":600,"y":275},"velocity":{"x":0,"y":0},"angle":0}}`;
+            const expected = `{"player1":{"position":{"x":200,"y":275},"velocity":{"x":0,"y":0},"angle":0},"player2":{"position":{"x":600,"y":275},"velocity":{"x":0,"y":0},"angle":0},"ball":{"position":{"x":400,"y":275},"velocity":{"x":0,"y":0},"angle":0}}`;
             var promise = new Promise((resolve, reject) => {
                 ws.on('message', function incoming(data) {
                     //console.log('Server sent back: ' + data);

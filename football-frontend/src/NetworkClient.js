@@ -1,8 +1,8 @@
 var ws = require('ws');
 
 class NetworkClient {
-    constructor(domain, port, moveSubscriber, that) {
-        this.moveUpdateSubscriber = moveSubscriber;
+    constructor(domain, port, stateSubscriber, that) {
+        this.stateUpdateSubscriber = stateSubscriber;
         this.subscriberOwner = that;
         this.ws = new WebSocket(`ws://${domain}:${port}/ws`);
         var myself = this;
@@ -21,18 +21,15 @@ class NetworkClient {
         };
         this.ws.onmessage = function(msgevent) {
             console.log('client received: ' + msgevent.data);
-            /*
-            var msg = JSON.parse(msgevent.data);
-            if (!msg.player || !msg.action || !['P1U', 'P2U'].includes(msg.action)) {
-                console.log('not a player move update message. only handling those for now.');
+            var newState = JSON.parse(msgevent.data);
+            if (!newState.player1 || !newState.player2) {
+                console.log('not a player move update message.');
                 return;
             }
-            console.log(myself.moveUpdateSubscriber);
-            if (myself.moveUpdateSubscriber) {
+            if (myself.stateUpdateSubscriber) {
                 console.log('invoke callback');
-                myself.moveUpdateSubscriber(parseInt(msg.player, 10), msg.direction, myself.subscriberOwner);
+                myself.stateUpdateSubscriber(newState, myself.subscriberOwner);
             }
-            */
         };
     }
 
