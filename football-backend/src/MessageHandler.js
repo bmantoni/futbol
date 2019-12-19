@@ -1,5 +1,5 @@
 class MessageHandler {
-    static ACTIONS = ['P1U', 'P2U'];
+    static ACTIONS = ['I'];
     static DIRECTIONS = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
 
     parse(msg) {
@@ -36,6 +36,8 @@ class MessageHandler {
         obj.isDown = () => obj.direction === 'DOWN';
         obj.isLeft = () => obj.direction === 'LEFT';
         obj.isRight = () => obj.direction === 'RIGHT';
+        obj.isPlayer1 = () => obj.player === '1';
+        obj.isPlayer2 = () => obj.player === '2';
     }
 }
 

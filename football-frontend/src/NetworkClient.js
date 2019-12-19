@@ -21,6 +21,7 @@ class NetworkClient {
         };
         this.ws.onmessage = function(msgevent) {
             console.log('client received: ' + msgevent.data);
+            /*
             var msg = JSON.parse(msgevent.data);
             if (!msg.player || !msg.action || !['P1U', 'P2U'].includes(msg.action)) {
                 console.log('not a player move update message. only handling those for now.');
@@ -31,6 +32,7 @@ class NetworkClient {
                 console.log('invoke callback');
                 myself.moveUpdateSubscriber(parseInt(msg.player, 10), msg.direction, myself.subscriberOwner);
             }
+            */
         };
     }
 

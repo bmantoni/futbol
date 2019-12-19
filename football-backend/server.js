@@ -11,7 +11,8 @@ const gs = new GameState((state) => {
 	//console.log(JSON.stringify(state));
 	console.log(`sending state update to ${wsInstance.getWss().clients.size} clients`);
 	wsInstance.getWss().clients.forEach(x => x.send(JSON.stringify(state)));
-}).start();
+});
+gs.start();
 
 server.get('/join', (req, res) => {
 	console.log((new Date()) + ' Received request for ' + req.url);
@@ -37,4 +38,4 @@ server.ws('/ws', (ws, req) => {
 
 var myServer = server.listen(3001);
 
-module.exports = myServer;
+module.exports = { gameState: gs, server: myServer };

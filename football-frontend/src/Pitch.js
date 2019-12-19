@@ -113,7 +113,7 @@ class Scene extends React.Component {
     var vector = player.calcRunVector(direction);
     Matter.Body.applyForce(player.body, {x: player.body.position.x, y: player.body.position.y }, vector);
     if (sendUpdate) {
-      this.netClient.send({player: this.props.player.toString(), action: this.props.player === 1 ? 'P1U' : 'P2U', direction: direction});
+      this.netClient.send({player: this.props.player.toString(), action: 'I', direction: direction});
     }
   }
 

@@ -9,12 +9,12 @@ describe('MessageHandler', function () {
                 {name: 'SyntaxError', message: /Unexpected token/});
         });
         it('throws error if no Player provided', function () {
-            var test = '{"action": "P1U", "direction": "UP"}';
+            var test = '{"action": "I", "direction": "UP"}';
             assert.throws(() => new MessageHandler().parse(test), 
                 {name: 'Error', message: /Missing player/});
         });
         it('throws error if invalid Player provided', function () {
-            var test = '{"player": "FOO", "action": "P1U", "direction": "UP"}';
+            var test = '{"player": "FOO", "action": "I", "direction": "UP"}';
             assert.throws(() => new MessageHandler().parse(test), 
                 {name: 'Error', message: /Invalid player/});
         });
@@ -31,19 +31,21 @@ describe('MessageHandler', function () {
     });
     describe('player move updates', function() {
         it('valid player1update OK', function () {
-            var test = '{"player": "1", "action": "P1U", "direction": "UP"}';
+            var test = '{"player": "1", "action": "I", "direction": "UP"}';
             assert.equal(new MessageHandler().parse(test).direction, 'UP');
         });
         it('valid player2update OK', function () {
-            var test = '{"player": "1", "action": "P2U", "direction": "UP"}';
+            var test = '{"player": "2", "action": "I", "direction": "UP"}';
             assert.equal(new MessageHandler().parse(test).direction, 'UP');
         });
-        it('direction helper method works', function () {
-            var test = '{"player": "1", "action": "P1U", "direction": "UP"}';
+        it('helper methods works', function () {
+            var test = '{"player": "1", "action": "I", "direction": "UP"}';
             assert.equal(new MessageHandler().parse(test).isUp(), true);
+            assert.equal(new MessageHandler().parse(test).isPlayer1(), true);
+            assert.equal(new MessageHandler().parse(test).isPlayer2(), false);
         });
         it('invalid direction throws error', function () {
-            var test = '{"player": "1", "action": "P1U", "direction": "QUIETER"}';
+            var test = '{"player": "1", "action": "I", "direction": "QUIETER"}';
             assert.throws(() => new MessageHandler().parse(test), 
                 {name: 'Error', message: /Invalid direction/});
         });

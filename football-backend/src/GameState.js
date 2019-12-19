@@ -8,6 +8,15 @@ class GameState {
         this.stateUpdatedHandler = stateUpdatedCallback;
         this.engine = new GameEngine(GameState.STATE_UPDATE_INTERVAL);
     }
+    start() {
+        this.timerId = setInterval(() => {
+            this.engine.tick();
+            this.stateUpdatedHandler(this.getState());
+        }, GameState.STATE_UPDATE_INTERVAL);
+    }
+    stop() {
+        clearInterval(this.timerId);
+    }
     join() {
         return num++;
     }
@@ -15,11 +24,8 @@ class GameState {
         this.players = 0;
         this.engine = new GameEngine(GameState.STATE_UPDATE_INTERVAL);
     }
-    start() {
-        setInterval(() => {
-            this.engine.tick();
-            this.stateUpdatedHandler(this.getState());
-        }, GameState.STATE_UPDATE_INTERVAL);
+    processInput(cmd) {
+        ge.movePlayer(cmd.isPlayer1() ? ge.player1 : ge.player2, cmd.direction);
     }
     getState() {
         return {
