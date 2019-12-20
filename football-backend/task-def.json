@@ -12,6 +12,14 @@
                     "protocol": "tcp"
                 }
             ], 
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "awslogs-football",
+                    "awslogs-region": "eu-west-2",
+                    "awslogs-stream-prefix": "awslogs-football"
+                }
+            },
             "essential": true
         }
     ], 
