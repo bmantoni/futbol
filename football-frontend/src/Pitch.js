@@ -15,7 +15,11 @@ class Scene extends React.Component {
     this.PITCH_WIDTH = 800;
     this.PITCH_HEIGHT = 550;
 
-    this.netClient = new NetworkClient('localhost', '3001', this.updateStateHandler, this);
+    this.netClient = new NetworkClient(
+      process.env.REACT_APP_SERVER_HOST, 
+      process.env.REACT_APP_SERVER_WS_PORT, 
+      this.updateStateHandler, 
+      this);
 
     this.myEngine = Matter.Engine.create({});
     this.myEngine.world.gravity.y = 0;
