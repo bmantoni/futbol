@@ -72,7 +72,7 @@ jobs:
       #working-directory: football-backend
       with:
         task-definition: football-backend/task-def.json
-        container-name: sample-app
+        container-name: FootballServer
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
