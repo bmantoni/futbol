@@ -76,8 +76,8 @@ jobs:
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
-      working-directory: football-backend
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      working-directory: football-backend
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: FootballService
