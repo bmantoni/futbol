@@ -53,9 +53,10 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
+      working-directory: football-backend
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: my-ecr-repo
+        ECR_REPOSITORY: football-repo
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -68,17 +69,19 @@ jobs:
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
+      working-directory: football-backend
       with:
-        task-definition: task-definition.json
+        task-definition: task-def.json
         container-name: sample-app
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
+      working-directory: football-backend
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: sample-app-service
-        cluster: default
+        service: FootballService
+        cluster: FootballCluster
         wait-for-service-stability: true
         
     - name: Build Front-End
@@ -92,6 +95,7 @@ jobs:
         npm run build
       
     - name: Deploy front-end to S3
+      working-directory: football-frontend
       uses: erangeles/s3-site-action@v1.0
       env:
         SOURCE_DIR: ./football-frontend/build

@@ -1,0 +1,23 @@
+{
+    "family": "football-server", 
+    "networkMode": "awsvpc", 
+    "containerDefinitions": [
+        {
+            "name": "FootballServer", 
+            "image": "httpd:2.4", 
+            "portMappings": [
+                {
+                    "containerPort": 3001, 
+                    "hostPort": 3001, 
+                    "protocol": "tcp"
+                }
+            ], 
+            "essential": true
+        }
+    ], 
+    "requiresCompatibilities": [
+        "FARGATE"
+    ], 
+    "cpu": "256", 
+    "memory": "512"
+}
