@@ -20,6 +20,7 @@
                     "awslogs-stream-prefix": "awslogs-football"
                 }
             },
+            "command": ["node", "server.js"],
             "essential": true
         }
     ], 
