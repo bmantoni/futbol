@@ -68,7 +68,7 @@ jobs:
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
-      uses: bmantoni/amazon-ecs-render-task-definition@v2.1
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
       #working-directory: football-backend
       with:
         task-definition: football-backend/task-def-full.json
