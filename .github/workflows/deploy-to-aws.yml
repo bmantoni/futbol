@@ -117,6 +117,7 @@ jobs:
         REACT_APP_SERVER_WS_PORT: 3001
         REACT_APP_SERVER_PATH_PREFIX: api/
       run: |
+        npm ci
         npm run build
     - uses: jakejarvis/s3-sync-action@master
       with:
