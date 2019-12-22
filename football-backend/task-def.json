@@ -2,6 +2,8 @@
     {
         "name": "FootballServer", 
         "image": "httpd:2.4", 
+        "family": "football-server",
+        "networkMode": "awsvpc",
         "portMappings": [
             {
                 "containerPort": 3001, 
