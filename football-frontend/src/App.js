@@ -7,7 +7,7 @@ const App = () => {
   const [player, setPlayer] = useState({});
 
   async function joinGame() {
-    const res = await fetch(`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HTTP_PORT}/join`);
+    const res = await fetch(`${process.env.REACT_APP_SERVER_HTTP}://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HTTP_PORT}/${process.env.REACT_APP_SERVER_PATH_PREFIX}join`);
     res.json()
       .then(res => setPlayer(res.player))
       .catch(err => setErrors(err))

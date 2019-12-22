@@ -16,8 +16,9 @@ class Scene extends React.Component {
     this.PITCH_HEIGHT = 550;
 
     this.netClient = new NetworkClient(
-      process.env.REACT_APP_SERVER_HOST, 
-      process.env.REACT_APP_SERVER_WS_PORT, 
+      process.env.REACT_APP_SERVER_HOST,
+      process.env.REACT_APP_SERVER_WS_PORT,
+      process.env.REACT_APP_SERVER_PATH_PREFIX,
       this.updateStateHandler, 
       this);
 

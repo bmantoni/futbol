@@ -32,6 +32,29 @@ on:
 name: Deploy to Amazon ECS
 
 jobs:
+  build:
+    name: Build and Test Backend
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      working-directory: football-backend
+      run: |
+        npm ci
+        npm run build --if-present
+        npm test
+      env:
+        CI: true
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -84,21 +107,23 @@ jobs:
         cluster: FootballCluster
         wait-for-service-stability: true
         
-#    - name: Build Front-End
-#      id: build-frontend
-#      working-directory: football-frontend
-#      env: 
-#        REACT_APP_SERVER_HOST: need_to_createlb_and_set_manually
-#        REACT_APP_SERVER_HTTP_PORT: 3001
-#        REACT_APP_SERVER_WS_PORT: 3001
-#      run: |
-#        npm run build
-#      
-#    - name: Deploy front-end to S3
-#      working-directory: football-frontend
-#      uses: erangeles/s3-site-action@v1.0
-#      env:
-#        SOURCE_DIR: ./football-frontend/build
-#        AWS_S3_BUCKET: bobby-football-arx42
-#        DEST_DIR: ui
-#        AWS_REGION: eu-west-1
+    - name: Build Front-End
+      id: build-frontend
+      working-directory: football-frontend
+      env: 
+        REACT_APP_SERVER_HTTP: http
+        REACT_APP_SERVER_HOST: https://football.mantoni.me/api
+        REACT_APP_SERVER_HTTP_PORT: 3001
+        REACT_APP_SERVER_WS_PORT: 3001
+        REACT_APP_SERVER_PATH_PREFIX: api/
+      run: |
+        npm run build
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: www.football.mantoni.me
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'eu-west-2'
+        SOURCE_DIR: './football-frontend/build'

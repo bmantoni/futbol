@@ -34,13 +34,19 @@ variable "public_sg" {
   description = "ID of the public sg"
   default     = "sg-0a22fe473c22306fb"
 }
-
 variable "vpc_id" {
   description = "The VPC"
   default     = "vpc-0ac3b162"
 }
-
 variable "task_exec_role_arn" {
   description = "task exec role arn"
   default     = "arn:aws:iam::208404775560:role/ecsTaskExecutionRole"
+}
+variable "site_name" {
+  description = "My site"
+  default = "football.mantoni.me"
+}
+variable "cloudfront_cert_arn" {
+  description = "ARN to the cert"
+  default = "arn:aws:acm:us-east-1:208404775560:certificate/6172b358-4a47-40d9-91d3-2aa5dabdbff6"
 }
