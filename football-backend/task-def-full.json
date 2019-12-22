@@ -2,29 +2,27 @@
     "family": "football-server", 
     "networkMode": "awsvpc", 
     "containerDefinitions": [
-    {
-        "name": "FootballServer", 
-        "image": "httpd:2.4", 
-        "portMappings": [
-            {
-                "containerPort": 3001, 
-                "hostPort": 3001, 
-                "protocol": "tcp"
-            }
-        ], 
-        "logConfiguration": {
-            "logDriver": "awslogs",
-            "options": {
-                "awslogs-group": "awslogs-football",
-                "awslogs-region": "eu-west-2",
-                "awslogs-stream-prefix": "awslogs-football"
-            }
-        },
-        "cpu": 256, 
-        "memory": 512,
-        "command": ["node", "server.js"],
-        "essential": true
-    }
+        {
+            "name": "FootballServer", 
+            "image": "httpd:2.4", 
+            "portMappings": [
+                {
+                    "containerPort": 3001, 
+                    "hostPort": 3001, 
+                    "protocol": "tcp"
+                }
+            ], 
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "awslogs-football",
+                    "awslogs-region": "eu-west-2",
+                    "awslogs-stream-prefix": "awslogs-football"
+                }
+            },
+            "command": ["node", "server.js"],
+            "essential": true
+        }
     ],
     "requiresCompatibilities": [
         "FARGATE"
