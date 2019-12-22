@@ -1,4 +1,7 @@
-[
+{
+    "family": "football-server", 
+    "networkMode": "awsvpc", 
+    "containerDefinitions": [
     {
         "name": "FootballServer", 
         "image": "httpd:2.4", 
@@ -17,13 +20,16 @@
                 "awslogs-stream-prefix": "awslogs-football"
             }
         },
-        "requiresCompatibilities": [
-            "FARGATE"
-        ], 
         "cpu": 256, 
         "memory": 512,
-        "executionRoleArn": "arn:aws:iam::208404775560:role/ecsTaskExecutionRole",
         "command": ["node", "server.js"],
         "essential": true
     }
-]
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ], 
+    "cpu": "256", 
+    "memory": "512",
+    "executionRoleArn": "arn:aws:iam::208404775560:role/ecsTaskExecutionRole"
+}
