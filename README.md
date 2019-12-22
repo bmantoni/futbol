@@ -30,4 +30,4 @@ This achieves basic synchronising of game state, for a little while. But things 
 1. Dockerfile for backend *Done*
 2. Create ECS service, cluster, LB, bucket, and IAM Role for Github Actions to use. *Done*
 3. Setup GitHub Run Action to deploy *Done*
-4. Dynamically updating LB URL in front-end build env var and AWS secrets.
+4. Dynamically update LB URL in front-end build env var and AWS secrets.
