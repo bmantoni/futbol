@@ -21,6 +21,7 @@ resource "aws_ecs_task_definition" "service" {
 
 resource "aws_alb_target_group" "football_server_tg" {
   name        = "football-server-tg"
+  depends_on  = ["aws_alb.main"]
   port        = 3001
   protocol    = "HTTP"
   vpc_id      = var.vpc_id

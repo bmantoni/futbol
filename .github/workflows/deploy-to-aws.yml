@@ -74,7 +74,6 @@ jobs:
         task-definition: football-backend/task-def-full.json
         container-name: FootballServer
         image: ${{ steps.build-image.outputs.image }}
-        family: football-server
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1

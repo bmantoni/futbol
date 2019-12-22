@@ -8,12 +8,15 @@ const wsInstance = ws(server);
 
 const mh = new MessageHandler();
 const gs = new GameState((state) => {
-	console.log(JSON.stringify(state));
+	//console.log(JSON.stringify(state));
 	//console.log(`sending state update to ${wsInstance.getWss().clients.size} clients`);
 	wsInstance.getWss().clients.forEach(x => x.send(JSON.stringify(state)));
 });
 gs.start();
 
+server.get('/', (req, res) => {
+	res.json({status: 'OK'});
+})
 server.get('/join', (req, res) => {
 	console.log((new Date()) + ' Received request for ' + req.url);
 	res.json({player: gs.join()});
