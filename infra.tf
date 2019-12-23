@@ -186,7 +186,8 @@ resource "aws_cloudfront_distribution" "website_cdn" {
 
   restrictions {
     geo_restriction {
-      restriction_type = "none"
+      restriction_type = "whitelist"
+      locations        = ["US", "GB"]
     }
   }
 
