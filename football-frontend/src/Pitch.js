@@ -104,6 +104,12 @@ class Scene extends React.Component {
     Matter.World.add(this.myEngine.world, [this.player1.body, this.player2.body, this.ball.body]);
     this.watchForCollisions();
 
+    //const canvas = document.querySelector('canvas')
+    var self = this
+    render.canvas.addEventListener('mousedown', function(e) {
+        self.handleClick(render.canvas, e)
+    })
+
     Matter.Engine.run(this.myEngine);
     Matter.Render.run(render);
   }
@@ -134,9 +140,32 @@ class Scene extends React.Component {
     'd': Player.Direction.RIGHT
   }
 
+  // INPUT HANDLING
+
   handleKeyPress(k) {
     this.movePlayer(this.currentPlayer(), this.DIRECTION_MAP[k]);
   }
+
+  handleClick(canvas, event) {
+      const rect = canvas.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+      const MARGIN = 20
+      if (x > this.currentPlayer().body.position.x + MARGIN) {
+        this.movePlayer(this.currentPlayer(), Player.Direction.RIGHT);
+      }
+      if (x < this.currentPlayer().body.position.x - MARGIN) {
+        this.movePlayer(this.currentPlayer(), Player.Direction.LEFT);
+      }
+      if (y > this.currentPlayer().body.position.y + MARGIN) {
+        this.movePlayer(this.currentPlayer(), Player.Direction.DOWN);
+      }
+      if (y < this.currentPlayer().body.position.y - MARGIN) {
+        this.movePlayer(this.currentPlayer(), Player.Direction.UP);
+      }
+  }
+
+  //
 
   updateStateHandler(newState, self) {
     Matter.Body.setVelocity(self.player1.body, newState.player1.velocity);
