@@ -26,7 +26,7 @@ server.get('/api/join', (req, res) => {
 	res.json({result: 'OK'});
 });
 
-server.ws('/ws', (ws, req) => {
+server.ws('/api/ws', (ws, req) => {
 	ws.on('message', msg => {
 		console.log('received: %s', msg);
 		try {
