@@ -4,7 +4,7 @@ class NetworkClient {
     constructor(protocol, server, port, prefix, stateSubscriber, that) {
         this.stateUpdateSubscriber = stateSubscriber;
         this.subscriberOwner = that;
-        this.ws = new WebSocket(`ws${protocol==='https'?'s':''}://${server}:${port}/${prefix}ws`);
+        this.ws = new WebSocket(`ws${protocol==='https'?'s':''}://${server}:${port}/ws`);
         var myself = this;
         
         this.ws.onopen = function() {

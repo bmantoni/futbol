@@ -9,8 +9,8 @@ class Player extends MatterBodyWrapper {
 
         this.calcRunVector = (direction) => {
             return {
-                x: direction == Player.Direction.LEFT ? (-1) * this.RUN_FORCE : (direction == Player.Direction.RIGHT ? this.RUN_FORCE : 0),
-                y: direction == Player.Direction.UP ? (-1) * this.RUN_FORCE : (direction == Player.Direction.DOWN ? this.RUN_FORCE : 0),
+                x: direction === Player.Direction.LEFT ? (-1) * this.RUN_FORCE : (direction === Player.Direction.RIGHT ? this.RUN_FORCE : 0),
+                y: direction === Player.Direction.UP ? (-1) * this.RUN_FORCE : (direction === Player.Direction.DOWN ? this.RUN_FORCE : 0),
               };
         };
     }
