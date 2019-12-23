@@ -1,10 +1,10 @@
 var ws = require('ws');
 
 class NetworkClient {
-    constructor(server, port, prefix, stateSubscriber, that) {
+    constructor(protocol, server, port, prefix, stateSubscriber, that) {
         this.stateUpdateSubscriber = stateSubscriber;
         this.subscriberOwner = that;
-        this.ws = new WebSocket(`ws://${server}:${port}/${prefix}ws`);
+        this.ws = new WebSocket(`ws${protocol==='https'?'s':''}://${server}:${port}/${prefix}ws`);
         var myself = this;
         
         this.ws.onopen = function() {
