@@ -17,11 +17,11 @@ gs.start();
 server.get('/', (req, res) => {
 	res.json({status: 'OK'});
 })
-server.get('/join', (req, res) => {
+server.get('/api/join', (req, res) => {
 	console.log((new Date()) + ' Received request for ' + req.url);
 	res.json({player: gs.join()});
 })
-.get('/reset', (req, res) => {
+.get('/api/reset', (req, res) => {
 	gs.reset();
 	res.json({result: 'OK'});
 });
