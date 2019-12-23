@@ -3,7 +3,7 @@ on:
     branches:
       - master
     paths:
-      - '/football-frontend/**'
+      - 'football-frontend/**'
 
 name: Build and Deploy FrontEnd
 

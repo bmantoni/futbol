@@ -3,9 +3,9 @@ on:
     branches:
       - master
     paths:
-      - '/football-backend/**'
+      - 'football-backend/**'
 
-name: Build Deploy FrontEnd BackEnd
+name: Build Deploy BackEnd
 
 jobs:
   build:
