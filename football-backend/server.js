@@ -2,15 +2,17 @@ const ws = require('express-ws')
 const express = require('express')
 const MessageHandler = require('./src/MessageHandler');
 const GameState = require('./src/GameState');
+const Broadcaster = require('./src/Broadcaster');
 
 const server = express();
 const wsInstance = ws(server);
+const broadcaster = new Broadcaster(wsInstance);
 
 const mh = new MessageHandler();
 const gs = new GameState((state) => {
 	//console.log(JSON.stringify(state));
 	//console.log(`sending state update to ${wsInstance.getWss().clients.size} clients`);
-	wsInstance.getWss().clients.forEach(x => x.send(JSON.stringify(state)));
+	broadcaster.broadcast(state);
 });
 gs.start();
 
@@ -19,7 +21,10 @@ server.get('/', (req, res) => {
 })
 server.get('/api/join', (req, res) => {
 	console.log((new Date()) + ' Received request for ' + req.url);
-	res.json({player: gs.join()});
+	const playerNum = gs.join();
+	broadcaster.broadcast(
+		MessageHandler.createTextMessage(`Player ${playerNum} has joined the game`));
+	res.json({player: playerNum});
 })
 .get('/api/reset', (req, res) => {
 	gs.reset();

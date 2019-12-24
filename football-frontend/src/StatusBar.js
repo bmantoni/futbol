@@ -14,7 +14,7 @@ function StatusBar(props) {
     return (
         <div className="statusBar">
             <div className="statusMessage">
-                Player 2 has joined the game.
+                {props.message}
             </div>
             <div className="statusActions">
                 <button disabled={isSending} onClick={sendRequest}>Reset</button>

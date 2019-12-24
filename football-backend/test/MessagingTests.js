@@ -9,7 +9,7 @@ describe('Socket messages', function () {
         var obj = require('../server');
         server = obj.server;
         game = obj.gameState;
-        ws = new WebSocket('ws://localhost:3001/ws');
+        ws = new WebSocket('ws://localhost:3001/api/ws');
     });
     afterEach(function () {
         ws.close();

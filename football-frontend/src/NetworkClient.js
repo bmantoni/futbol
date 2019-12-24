@@ -6,8 +6,9 @@ class NetworkClient {
         return `${process.env.REACT_APP_SERVER_HTTP}://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HTTP_PORT}/${process.env.REACT_APP_SERVER_PATH_PREFIX}${method}`;
     }
 
-    constructor(protocol, server, port, prefix, stateSubscriber, that) {
+    constructor(protocol, server, port, prefix, stateSubscriber, msgSubscriber, that) {
         this.stateUpdateSubscriber = stateSubscriber;
+        this.messageSubscriber = msgSubscriber;
         this.subscriberOwner = that;
         this.ws = new WebSocket(`ws${protocol==='https'?'s':''}://${server}:${port}/${prefix}ws`);
         var myself = this;
@@ -26,14 +27,21 @@ class NetworkClient {
         };
         this.ws.onmessage = function(msgevent) {
             console.log('client received: ' + msgevent.data);
-            var newState = JSON.parse(msgevent.data);
-            if (!newState.player1 || !newState.player2) {
-                console.log('not a player move update message.');
+            var msgObj = JSON.parse(msgevent.data);
+            if (msgObj.action === 'text') {
+                console.log('message received. invoking callback');
+                if (myself.messageSubscriber) {
+                    myself.messageSubscriber(msgObj.message);
+                }
+                return;
+            }
+            if (!msgObj.player1 || !msgObj.player2) {
+                console.log('not a message or state update. ignoring.');
                 return;
             }
             if (myself.stateUpdateSubscriber) {
-                console.log('invoke callback');
-                myself.stateUpdateSubscriber(newState, myself.subscriberOwner);
+                console.log('state update received. invoking callback');
+                myself.stateUpdateSubscriber(msgObj, myself.subscriberOwner);
             }
         };
     }

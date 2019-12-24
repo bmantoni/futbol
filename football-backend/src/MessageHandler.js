@@ -39,6 +39,10 @@ class MessageHandler {
         obj.isPlayer1 = () => obj.player === '1';
         obj.isPlayer2 = () => obj.player === '2';
     }
+
+    static createTextMessage(msg) {
+        return {action: 'text', message: msg};
+    }
 }
 
 module.exports = MessageHandler;

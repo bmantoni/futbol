@@ -21,6 +21,7 @@ class Scene extends React.Component {
       process.env.REACT_APP_SERVER_WS_PORT,
       process.env.REACT_APP_SERVER_PATH_PREFIX,
       this.updateStateHandler, 
+      props.messageHandler,
       this);
 
     this.myEngine = Matter.Engine.create({});
