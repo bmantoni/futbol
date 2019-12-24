@@ -1,6 +1,11 @@
 var ws = require('ws');
 
 class NetworkClient {
+
+    static getApiUrl = (method) => {
+        return `${process.env.REACT_APP_SERVER_HTTP}://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HTTP_PORT}/${process.env.REACT_APP_SERVER_PATH_PREFIX}${method}`;
+    }
+
     constructor(protocol, server, port, prefix, stateSubscriber, that) {
         this.stateUpdateSubscriber = stateSubscriber;
         this.subscriberOwner = that;

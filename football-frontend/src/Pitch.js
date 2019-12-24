@@ -9,11 +9,11 @@ import NetworkClient from './NetworkClient';
 
 class Scene extends React.Component {
   
+  PITCH_WIDTH = 800;
+  PITCH_HEIGHT = 550;
+
   constructor(props) {
     super(props);
-    
-    this.PITCH_WIDTH = 800;
-    this.PITCH_HEIGHT = 550;
 
     this.netClient = new NetworkClient(
       process.env.REACT_APP_SERVER_HTTP,
@@ -133,6 +133,10 @@ class Scene extends React.Component {
     return this.props.player === 1 ? this.player1 : this.player2;
   }
 
+  observingOnly() {
+    return this.props.player > 2;
+  }
+
   DIRECTION_MAP = {
     'w': Player.Direction.UP,
     'a': Player.Direction.LEFT,
@@ -143,26 +147,34 @@ class Scene extends React.Component {
   // INPUT HANDLING
 
   handleKeyPress(k) {
-    this.movePlayer(this.currentPlayer(), this.DIRECTION_MAP[k]);
+    if (!this.observingOnly()) {
+      this.movePlayer(this.currentPlayer(), this.DIRECTION_MAP[k]);
+    }
   }
 
   handleClick(canvas, event) {
-      const rect = canvas.getBoundingClientRect()
-      const x = event.clientX - rect.left
-      const y = event.clientY - rect.top
-      const MARGIN = 20
-      if (x > this.currentPlayer().body.position.x + MARGIN) {
-        this.movePlayer(this.currentPlayer(), Player.Direction.RIGHT);
-      }
-      if (x < this.currentPlayer().body.position.x - MARGIN) {
-        this.movePlayer(this.currentPlayer(), Player.Direction.LEFT);
-      }
-      if (y > this.currentPlayer().body.position.y + MARGIN) {
-        this.movePlayer(this.currentPlayer(), Player.Direction.DOWN);
-      }
-      if (y < this.currentPlayer().body.position.y - MARGIN) {
-        this.movePlayer(this.currentPlayer(), Player.Direction.UP);
-      }
+    if (!this.observingOnly()) {
+      this.moveBasedOnClick(canvas, event);
+    }
+  }
+
+  moveBasedOnClick(canvas, event) {
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    const MARGIN = 20
+    if (x > this.currentPlayer().body.position.x + MARGIN) {
+      this.movePlayer(this.currentPlayer(), Player.Direction.RIGHT);
+    }
+    if (x < this.currentPlayer().body.position.x - MARGIN) {
+      this.movePlayer(this.currentPlayer(), Player.Direction.LEFT);
+    }
+    if (y > this.currentPlayer().body.position.y + MARGIN) {
+      this.movePlayer(this.currentPlayer(), Player.Direction.DOWN);
+    }
+    if (y < this.currentPlayer().body.position.y - MARGIN) {
+      this.movePlayer(this.currentPlayer(), Player.Direction.UP);
+    }
   }
 
   //

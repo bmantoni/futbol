@@ -5,7 +5,7 @@ on:
     paths:
       - 'football-backend/**'
 
-name: Build Deploy BackEnd
+name: Build and Deploy BackEnd
 
 jobs:
   build:

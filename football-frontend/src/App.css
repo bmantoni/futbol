@@ -51,3 +51,26 @@
   float: left;
   padding: 20px;
 }
+
+.statusBar {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 12px;
+  width: 800px;
+  display: inline-block;
+  padding: 10px;
+}
+
+.statusMessage {
+  float: left;
+}
+
+.statusActions {
+  float: right;
+}
+
+.statusActions button {
+  background-color: white;
+  border: 1px solid #cccccc;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 12px;
+}
