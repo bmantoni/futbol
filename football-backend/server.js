@@ -1,6 +1,6 @@
 const ws = require('express-ws');
 const express = require('express');
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const MessageHandler = require('./src/MessageHandler');
 const GameState = require('./src/GameState');
 const Broadcaster = require('./src/Broadcaster');

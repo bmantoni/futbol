@@ -11,8 +11,12 @@ const App = () => {
   const [message, setMessage] = useState('');
 
   async function joinGame() {
-    const res = await axios.post(NetworkClient.getApiUrl('join'));
-    setPlayer(res.data.player);
+    try {
+      const res = await axios.post(NetworkClient.getApiUrl('join'));
+      setPlayer(res.data.player);
+    } catch (error) {
+      setMessage(error.message);
+    }
   }
 
   useEffect(() => {
