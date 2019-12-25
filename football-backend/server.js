@@ -1,10 +1,14 @@
-const ws = require('express-ws')
-const express = require('express')
+const ws = require('express-ws');
+const express = require('express');
+var bodyParser = require("body-parser");
 const MessageHandler = require('./src/MessageHandler');
 const GameState = require('./src/GameState');
 const Broadcaster = require('./src/Broadcaster');
 
 const server = express();
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
+
 const wsInstance = ws(server);
 const broadcaster = new Broadcaster(wsInstance);
 
@@ -19,14 +23,15 @@ gs.start();
 server.get('/', (req, res) => {
 	res.json({status: 'OK'});
 })
-server.get('/api/join', (req, res) => {
+server.post('/api/join', (req, res) => {
 	console.log((new Date()) + ' Received request for ' + req.url);
 	const playerNum = gs.join();
 	broadcaster.broadcast(
 		MessageHandler.createTextMessage(`Player ${playerNum} has joined the game`));
 	res.json({player: playerNum});
 })
-.get('/api/reset', (req, res) => {
+.post('/api/reset', (req, res) => {
+	console.log((new Date()) + ' Received request for ' + req.url);
 	gs.reset();
 	res.json({result: 'OK'});
 });

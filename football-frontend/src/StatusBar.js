@@ -1,12 +1,13 @@
 import React, { useState, useCallback } from "react";
-import NetworkClient from './NetworkClient'
+import axios from 'axios';
+import NetworkClient from './NetworkClient';
 
 function StatusBar(props) {
     const [isSending, setIsSending] = useState(false)
     const sendRequest = useCallback(async () => {
         if (isSending) return
         setIsSending(true)
-        await fetch(NetworkClient.getApiUrl('reset'));
+        await axios.post(NetworkClient.getApiUrl('reset'));
         setIsSending(false)
         props.resetCallback();
       }, [isSending])

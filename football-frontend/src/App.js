@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import './App.css';
 import Pitch from './Pitch'
 import StatusBar from './StatusBar'
@@ -10,10 +11,8 @@ const App = () => {
   const [message, setMessage] = useState('');
 
   async function joinGame() {
-    const res = await fetch(NetworkClient.getApiUrl('join'));
-    res.json()
-      .then(res => setPlayer(res.player))
-      .catch(err => setErrors(err))
+    const res = await axios.post(NetworkClient.getApiUrl('join'));
+    setPlayer(res.data.player);
   }
 
   useEffect(() => {

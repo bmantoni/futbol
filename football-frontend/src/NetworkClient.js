@@ -14,15 +14,12 @@ class NetworkClient {
         var myself = this;
         
         this.ws.onopen = function() {
-            // do something
             console.log('opened socket');
         };
         this.ws.onerror = function() {
-            // do something
             console.log('socket open error');
         };
         this.ws.onclose = function() {
-            // do something
             console.log('socket closed');
         };
         this.ws.onmessage = function(msgevent) {
