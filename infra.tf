@@ -141,7 +141,7 @@ resource "aws_cloudfront_distribution" "website_cdn" {
   default_root_object = "index.html"
 
   default_cache_behavior {
-    allowed_methods = ["GET", "HEAD"] # make sure I don't send the backend calls through CF
+    allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
     target_origin_id = "origin-bucket-${aws_s3_bucket.www_site.id}"
 
@@ -164,7 +164,7 @@ resource "aws_cloudfront_distribution" "website_cdn" {
 
   ordered_cache_behavior {
     path_pattern     = "/api/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "football-backend-origin"
 

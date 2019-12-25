@@ -12,8 +12,11 @@ const App = () => {
 
   async function joinGame() {
     try {
+      var startTime = new Date();
       const res = await axios.post(NetworkClient.getApiUrl('join'));
+      var endTime = new Date();
       setPlayer(res.data.player);
+      setMessage(`Latency: ${endTime.getTime()-startTime.getTime()} ms`);
     } catch (error) {
       setMessage(error.message);
     }
