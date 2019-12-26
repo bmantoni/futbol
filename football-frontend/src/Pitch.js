@@ -190,6 +190,8 @@ class Scene extends React.Component {
     Matter.Body.setVelocity(self.ball.body, newState.ball.velocity);
     Matter.Body.setPosition(self.ball.body, newState.ball.position);
     Matter.Body.setAngle(self.ball.body, newState.ball.angle);
+    self.setState({player1Score: newState.player1.score, 
+      player2Score: newState.player2.velocity});
     // TODO scores too
   }
 
