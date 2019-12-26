@@ -7,7 +7,7 @@ import Ball from './Ball';
 import ScoreBoard from './ScoreBoard';
 import NetworkClient from './NetworkClient';
 
-class Scene extends React.Component {
+class Pitch extends React.Component {
   
   PITCH_WIDTH = 800;
   PITCH_HEIGHT = 550;
@@ -191,8 +191,7 @@ class Scene extends React.Component {
     Matter.Body.setPosition(self.ball.body, newState.ball.position);
     Matter.Body.setAngle(self.ball.body, newState.ball.angle);
     self.setState({player1Score: newState.player1.score, 
-      player2Score: newState.player2.velocity});
-    // TODO scores too
+      player2Score: newState.player2.score});
   }
 
   render() {
@@ -205,4 +204,4 @@ class Scene extends React.Component {
       </div>;
   }
 }
-export default Scene;
+export default Pitch;
