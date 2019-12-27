@@ -1,7 +1,7 @@
 {
   "name": "football-backend",
   "version": "1.0.0",
-  "description": "backend for futbol",
+  "description": "node backend for futbol",
   "main": "server.js",
   "scripts": {
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
