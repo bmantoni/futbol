@@ -4,7 +4,8 @@
   "description": "backend for futbol",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,12 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-ws": "^4.0.0",
-    "matter-js": "^0.14.2",
-    "mocha": "^6.2.2"
+    "matter-js": "^0.14.2"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.9",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0"
   }
 }
