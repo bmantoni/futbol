@@ -61,6 +61,20 @@ test('currentPlayer returns player1 if it should', () => {
     expect(cp).toBe(p.player1);
 });
 
+test('observingOnly works when true', () => {
+    const domContainer = document.createElement('div');
+    const player = 3;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    expect(p.observingOnly()).toBe(true);
+});
+
+test('observingOnly works when false', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    expect(p.observingOnly()).toBe(false);
+});
+
 test('currentPlayer returns player2 if it should', () => {
     const domContainer = document.createElement('div');
     const player = 2;
