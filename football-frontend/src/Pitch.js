@@ -115,13 +115,6 @@ class Pitch extends React.Component {
     Matter.Render.run(render);
   }
 
-  movePlayerHandler(playerNum, direction, self = this) {
-    if (playerNum !== self.props.player) {
-      var playerObj = playerNum === 1 ? self.player1 : self.player2;
-      self.movePlayer(playerObj, direction, false);
-    }
-  }
-
   movePlayer(player, direction, sendUpdate = true) {
     var vector = player.calcRunVector(direction);
     Matter.Body.applyForce(player.body, {x: player.body.position.x, y: player.body.position.y }, vector);

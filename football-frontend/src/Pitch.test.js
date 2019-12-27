@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import { render } from '@testing-library/react';
 import Pitch from './Pitch';
+import Player from './Player';
 
 test('scores initialise properly', () => {
     var p = new Pitch({});
+    
     expect(p.state.player1Score).toBe(0);    
     expect(p.state.player2Score).toBe(0);
 });
@@ -14,12 +16,58 @@ test('correct score gets incremented on scoring', () => {
     var p = ReactDOM.render(<Pitch />, domContainer);
 
     p.handlePlayerScored(1, p);
+
     expect(p.state.player1Score).toBe(1);
     expect(p.state.player2Score).toBe(0);
     p.handlePlayerScored(2, p);
     expect(p.state.player1Score).toBe(1);
     expect(p.state.player2Score).toBe(1);
-})
+});
+
+test('movePlayer sends update if it should', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+
+    var mockSend = jest.fn((obj) => {});
+    p.netClient.send = mockSend;
+    
+    p.movePlayer(p.player1, Player.Direction.UP, true);
+    
+    expect(mockSend.mock.calls.length).toBe(1);
+    expect(mockSend.mock.calls[0][0].action).toBe('I'); // 'Input'
+    expect(mockSend.mock.calls[0][0].player).toBe('1');
+    expect(mockSend.mock.calls[0][0].direction).toBe('UP');
+});
+
+test('movePlayer doesnt send update if it shouldnt', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+
+    var mockSend = jest.fn((obj) => {});
+    p.netClient.send = mockSend;
+    
+    p.movePlayer(p.player1, Player.Direction.UP, false);
+    
+    expect(mockSend.mock.calls.length).toBe(0);
+});
+
+test('currentPlayer returns player1 if it should', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    var cp = p.currentPlayer();
+    expect(cp).toBe(p.player1);
+});
+
+test('currentPlayer returns player2 if it should', () => {
+    const domContainer = document.createElement('div');
+    const player = 2;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    var cp = p.currentPlayer();
+    expect(cp).toBe(p.player2);
+});
 
 test('state updates get applied correctly', () => {
     var testState = {
