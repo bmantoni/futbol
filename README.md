@@ -1,3 +1,6 @@
+[![Actions Status](https://github.com/bmantoni/futbol/workflows/Build%20and%20Deploy%20FrontEnd/badge.svg)](https://github.com/bmantoni/futbol/actions)
+[![Actions Status](https://github.com/bmantoni/futbol/workflows/Build%20and%20Deploy%20BackEnd/badge.svg)](https://github.com/bmantoni/futbol/actions)
+
 # futbol
 Simple football-like multiplayer game to explore basic multiplayer state synchronisation.
 
