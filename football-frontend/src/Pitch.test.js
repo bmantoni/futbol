@@ -92,13 +92,11 @@ test('handleKeyPress doesnt call move when observing', () => {
     const player = 3;
     var p = ReactDOM.render(<Pitch player={player} />, domContainer);
 
-    const originalApplyForce = Matter.Body.applyForce;
-    var mockApplyForce = jest.fn((b, p, v) => {});
-    Matter.Body.applyForce = mockApplyForce;
+    jest.spyOn(Matter.Body, "applyForce").mockImplementation((b, p, v) => {});
     
     var cp = p.handleKeyPress('a');
-    expect(mockApplyForce.mock.calls.length).toBe(0);
-    Matter.Body.applyForce = originalApplyForce;
+    expect(Matter.Body.applyForce.mock.calls.length).toBe(0);
+    Matter.Body.applyForce.mockRestore();
 });
 
 test('handleKeyPress calls move when not observing', () => {
@@ -106,13 +104,11 @@ test('handleKeyPress calls move when not observing', () => {
     const player = 1;
     var p = ReactDOM.render(<Pitch player={player} />, domContainer);
 
-    const originalApplyForce = Matter.Body.applyForce;
-    var mockApplyForce = jest.fn((b, p, v) => {});
-    Matter.Body.applyForce = mockApplyForce;
+    jest.spyOn(Matter.Body, "applyForce").mockImplementation((b, p, v) => {});
     
     var cp = p.handleKeyPress('a');
-    expect(mockApplyForce.mock.calls.length).toBe(1);
-    Matter.Body.applyForce = originalApplyForce;
+    expect(Matter.Body.applyForce.mock.calls.length).toBe(1);
+    Matter.Body.applyForce.mockRestore();
 });
 
 test('movePlayer doesnt call send when sendUpdate false', () => {
