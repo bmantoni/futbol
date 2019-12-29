@@ -31,10 +31,10 @@ const App = () => {
       <header className="App-header">
         {player > 2 ? 'The game is full. Observing' : `Player ${JSON.stringify(player)}`}
       </header>
-      <body>
+      <div>
         <Pitch player={player} messageHandler={setMessage} /> 
         <StatusBar resetCallback={joinGame} message={message} />
-      </body>
+      </div>
     </div>
   );
 }
