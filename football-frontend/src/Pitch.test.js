@@ -4,6 +4,10 @@ import { render } from '@testing-library/react';
 import Pitch from './Pitch';
 import Player from './Player';
 
+import Matter from "matter-js";
+import NetworkClient from './NetworkClient';
+jest.mock('./NetworkClient');
+
 test('scores initialise properly', () => {
     var p = new Pitch({});
     
@@ -81,6 +85,53 @@ test('currentPlayer returns player2 if it should', () => {
     var p = ReactDOM.render(<Pitch player={player} />, domContainer);
     var cp = p.currentPlayer();
     expect(cp).toBe(p.player2);
+});
+
+test('handleKeyPress doesnt call move when observing', () => {
+    const domContainer = document.createElement('div');
+    const player = 3;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+
+    const originalApplyForce = Matter.Body.applyForce;
+    var mockApplyForce = jest.fn((b, p, v) => {});
+    Matter.Body.applyForce = mockApplyForce;
+    
+    var cp = p.handleKeyPress('a');
+    expect(mockApplyForce.mock.calls.length).toBe(0);
+    Matter.Body.applyForce = originalApplyForce;
+});
+
+test('handleKeyPress calls move when not observing', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+
+    const originalApplyForce = Matter.Body.applyForce;
+    var mockApplyForce = jest.fn((b, p, v) => {});
+    Matter.Body.applyForce = mockApplyForce;
+    
+    var cp = p.handleKeyPress('a');
+    expect(mockApplyForce.mock.calls.length).toBe(1);
+    Matter.Body.applyForce = originalApplyForce;
+});
+
+test('movePlayer doesnt call send when sendUpdate false', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    
+    var cp = p.movePlayer(p.player1, Player.Direction.UP, false);
+    expect(p.netClient.send.mock.calls.length).toBe(0);
+    // NetworkClient is automocked
+});
+
+test('movePlayer does call send when sendUpdate not provided', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+
+    var cp = p.movePlayer(p.player1, Player.Direction.UP);
+    expect(p.netClient.send.mock.calls.length).toBe(1);
 });
 
 test('state updates get applied correctly', () => {
