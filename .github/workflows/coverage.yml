@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Coverage
+
+jobs:
+  build:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Coverage for Backend
+      working-directory: football-backend
+      run: |
+        npm ci
+        npm run build --if-present
+        npm test
+      env:
+        CI: true
+
+    - name: Coverage for Front-End
+      id: build-frontend
+      working-directory: football-frontend
+      env: 
+        REACT_APP_SERVER_HTTP: https
+        REACT_APP_SERVER_HOST: football.mantoni.me
+        REACT_APP_SERVER_HTTP_PORT: 443
+        REACT_APP_SERVER_WS_PORT: 443
+        REACT_APP_SERVER_PATH_PREFIX: api/
+      run: |
+        npm ci
+        npm run build
+        CI=true npm test -- --coverage
+
+    - name: Merge lcov results
+      run: |
+        npm i -g lcov-result-merger
+        lcov-result-merger 'football-*/coverage/lcov.info' ./lcov-merged.info
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./lcov-merged.info

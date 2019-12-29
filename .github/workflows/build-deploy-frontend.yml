@@ -9,7 +9,7 @@ name: Build and Deploy FrontEnd
 
 jobs:
   deploy:
-    name: Build and Deploy
+    name: Build, Test 
     runs-on: ubuntu-latest
 
     steps:
@@ -28,8 +28,9 @@ jobs:
       run: |
         npm ci
         npm run build
+        CI=true npm test
         
-    - name: Deploy Front-End
+    - name: Deploy
       uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
