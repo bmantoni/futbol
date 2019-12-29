@@ -18,7 +18,7 @@ function StatusBar(props) {
                 {props.message}
             </div>
             <div className="statusActions">
-                <button disabled={isSending} onClick={sendRequest}>Reset</button>
+                <button disabled={isSending} onClick={sendRequest} data-testid="resetButton">Reset</button>
             </div>
         </div>
     );
