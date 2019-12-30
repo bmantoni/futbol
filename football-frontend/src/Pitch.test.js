@@ -130,6 +130,57 @@ test('movePlayer does call send when sendUpdate not provided', () => {
     expect(p.netClient.send.mock.calls.length).toBe(1);
 });
 
+test('createPitch creates what it should', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    expect(p.createPitch().length).toBe(6);
+});
+
+test('handles click for LEFT only', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    jest.spyOn(p, "movePlayer").mockImplementation((p, d, s) => {});
+
+    const clickPos = {clientX: 0, clientY: p.player1.body.position.y};
+    p.moveBasedOnClick(p.mRender.canvas, clickPos);
+
+    expect(p.movePlayer.mock.calls.length).toBe(1);
+    expect(p.movePlayer.mock.calls[0][1]).toBe('LEFT');
+
+    p.movePlayer.mockRestore();
+});
+
+test('handles click for UP only', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    jest.spyOn(p, "movePlayer").mockImplementation((p, d, s) => {});
+    
+    const clickPos = {clientX: p.player1.body.position.x, clientY: 0};
+    p.moveBasedOnClick(p.mRender.canvas, clickPos);
+
+    expect(p.movePlayer.mock.calls.length).toBe(1);
+    expect(p.movePlayer.mock.calls[0][1]).toBe('UP');
+
+    p.movePlayer.mockRestore();
+});
+
+test('handles diagonal click', () => {
+    const domContainer = document.createElement('div');
+    const player = 1;
+    var p = ReactDOM.render(<Pitch player={player} />, domContainer);
+    jest.spyOn(p, "movePlayer").mockImplementation((p, d, s) => {});
+    
+    const clickPos = {clientX: 0, clientY: 0};
+    p.moveBasedOnClick(p.mRender.canvas, clickPos);
+
+    expect(p.movePlayer.mock.calls.length).toBe(2);
+
+    p.movePlayer.mockRestore();
+});
+
 test('state updates get applied correctly', () => {
     var testState = {
         player1: {

@@ -91,7 +91,7 @@ class Pitch extends React.Component {
   }
 
   componentDidMount() {
-    var render = Matter.Render.create({
+    this.mRender = Matter.Render.create({
       element: this.refs.scene,
       engine: this.myEngine,
       options: {
@@ -107,12 +107,12 @@ class Pitch extends React.Component {
 
     //const canvas = document.querySelector('canvas')
     var self = this
-    render.canvas.addEventListener('mousedown', function(e) {
-        self.handleClick(render.canvas, e)
+    this.mRender.canvas.addEventListener('mousedown', function(e) {
+        self.handleClick(self.mRender.canvas, e)
     })
 
     Matter.Engine.run(this.myEngine);
-    Matter.Render.run(render);
+    Matter.Render.run(this.mRender);
   }
 
   movePlayer(player, direction, sendUpdate = true) {
