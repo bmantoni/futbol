@@ -2,6 +2,7 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import App from "./App";
+import Pitch from "./Pitch";
 
 import axios from 'axios';
 jest.mock('axios');
@@ -31,6 +32,5 @@ it("makes POST to join when rendered", async () => {
 
   expect(axios.post.mock.calls.length).toBe(1);
 
+  axios.post.mockRestore();
 });
-
-// TODO verify it passes the returned player # to Pitch component
