@@ -1,5 +1,5 @@
-[![Actions Status](https://github.com/bmantoni/futbol/workflows/Build%20and%20Deploy%20FrontEnd/badge.svg)](https://github.com/bmantoni/futbol/actions)
-[![Actions Status](https://github.com/bmantoni/futbol/workflows/Build%20and%20Deploy%20BackEnd/badge.svg)](https://github.com/bmantoni/futbol/actions)
+[![Actions Status](https://github.com/bmantoni/futbol/workflows/Build%20FrontEnd/badge.svg)](https://github.com/bmantoni/futbol/actions)
+[![Actions Status](https://github.com/bmantoni/futbol/workflows/Build%20BackEnd/badge.svg)](https://github.com/bmantoni/futbol/actions)
 [![Coverage Status](https://coveralls.io/repos/github/bmantoni/futbol/badge.svg?branch=master)](https://coveralls.io/github/bmantoni/futbol?branch=master)
 
 # futbol
