@@ -42,13 +42,13 @@ class GameState {
                 position: this.engine.player1.body.position,
                 velocity: this.engine.player1.body.velocity,
                 angle: this.engine.player1.body.angle,
-                score: this.engine.player1score
+                score: this.engine.player1Score
             },
             player2: {
                 position: this.engine.player2.body.position,
                 velocity: this.engine.player2.body.velocity,
                 angle: this.engine.player2.body.angle,
-                score: this.engine.player2score
+                score: this.engine.player2Score
             },
             ball: {
                 position: this.engine.ball.body.position,
