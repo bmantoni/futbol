@@ -6,7 +6,7 @@
 Simple football-like multiplayer game to explore basic multiplayer state synchronisation.
 
 ## Dev Notes
-On the journey to get this working, I went through a couple milestones:
+To get this working, I went through a couple milestones:
 
 ### Step 1 - Local Game
 
@@ -36,8 +36,11 @@ This achieves basic synchronising of game state, for a little while. But things 
 
 1. Mouse/touch support 
 2. Status bar with message output
-3. Latency calculation
+3. Latency display 
 4. Observer mode (players > 2)
 
 ## Deployment
-GitHub actions used to deploy the front-end to S3 and backend to ECS. CloudFront used to serve everything - static S3 content and API requests to container (wss WebSocket and HTTPS POSTs.)
+GitHub actions used to deploy the front-end to S3 and backend to ECS. CloudFront used to serve everything - static S3 content and API requests to container (wss WebSocket and HTTPS POSTs.) Lambda used to update the LB SG to restrict to CloudFront IPs.
+
+`terraform apply` to deploy it.
+

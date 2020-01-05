@@ -2,13 +2,7 @@
 
 Backend for football
 
-Node, Express, WebSocket, Matter.js.
-
 ## Usage
-
-### `terraform apply`
-
-Deploy the infra
 
 ### `npm test`
 
